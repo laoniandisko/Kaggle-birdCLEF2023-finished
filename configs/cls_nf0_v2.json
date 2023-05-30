@@ -1,0 +1,57 @@
+{
+  "network": "TimmClassifier_v1",
+  "encoder_params": {
+    "encoder": "eca_nfnet_l0",
+    "duration": 15,
+    "val_duration": 5,
+    "backbone_params": {
+      "in_chans": 1,
+      "drop_path_rate": 0.2,
+      "drop_rate": 0.5
+    },
+    "mel_config": {"sample_rate": 32000,
+      "window_size": 2048,
+      "hop_size": 320,
+      "fmin": 50,
+      "fmax": 14000,
+      "mel_bins": 128,
+      "power": 2,
+      "top_db": null}
+  },
+  "train_transforms": "set_1",
+  "multiplier": 1,
+  "optimizer": {
+    "train_bs": 16,
+    "val_bs": 4,
+    "type": "AdamW",
+    "learning_rate": 7e-4,
+    "weight_decay": 1e-2,
+    "schedule": {
+      "type": "cosine",
+      "mode": "step",
+      "epochs": 16,
+      "params": {
+        "eta_min": 1e-5
+      }
+    }
+  },
+  "losses": [
+    {
+      "name": "BCEW",
+      "type": "BCEBirdLossCalculator",
+      "weight": 0.5,
+      "display": true,
+      "params": {
+        "pos_weight": [["akiapo", 9.757048734120374], ["aniani", 10.28483241369434], ["apapan", 5.215361924162119], ["barpet", 8.906926143924924], ["crehon", 30.854497241083024], ["elepai", 9.302980949429841], ["ercfra", 15.427248620541512], ["hawama", 7.713624310270756], ["hawcre", 7.966596931354483], ["hawgoo", 11.661903789690601], ["hawhaw", 21.817424229271428], ["hawpet1", 21.817424229271428], ["houfin", 1.983402202661039], ["iiwi", 5.937950762616617], ["jabwar", 4.016913394677434], ["maupar", 15.427248620541512], ["omao", 7.966596931354483], ["puaioh", 17.813852287849848], ["skylar", 1.5933193862708968], ["warwhe1", 4.238191141388434], ["yefcan", 4.363484845854286]]
+      }
+    },
+    {
+      "name": "SSLOSS",
+      "type": "SensitivitySpecificityLossCalculator",
+      "weight": 1,
+      "display": true,
+      "params": {}
+    }
+
+  ]
+}

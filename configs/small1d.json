@@ -1,0 +1,36 @@
+{
+  "network": "OneDClassifier",
+  "encoder_params": {
+    "encoder": "OneDConvNet",
+    "filters_start": 16,
+    "kernel_start": 128
+  },
+  "optimizer": {
+    "train_bs": 8,
+    "val_bs": 8,
+    "type": "SGD",
+    "learning_rate": 0.05,
+    "weight_decay": 1e-4,
+    "momentum": 0.9,
+    "nesterov": true,
+    "schedule": {
+      "type": "cosine",
+      "mode": "step",
+      "epochs": 100,
+      "params": {
+        "eta_min": 1e-5
+      }
+    }
+  },
+   "losses": [
+    {
+      "name": "BCE2W",
+      "type": "BCEF2WLossCalculator",
+      "weight": 10,
+      "display": true,
+      "params": {
+        "weights": [1.0, 1.0]
+      }
+    }
+  ]
+}

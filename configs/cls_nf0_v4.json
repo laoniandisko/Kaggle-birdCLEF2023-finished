@@ -1,0 +1,48 @@
+{
+  "network": "TimmClassifier_v1",
+  "encoder_params": {
+    "encoder": "eca_nfnet_l0",
+    "duration": 5,
+    "val_duration": 5,
+    "classes": 21,
+    "backbone_params": {
+      "in_chans": 1,
+      "drop_path_rate": 0.2,
+      "drop_rate": 0.5
+    },
+    "mel_config": {"sample_rate": 32000,
+      "window_size": 2048,
+      "hop_size": 320,
+      "fmin": 50,
+      "fmax": 14000,
+      "mel_bins": 128,
+      "power": 2,
+      "top_db": null}
+  },
+  "train_transforms": "set_1",
+  "multiplier": 2,
+  "optimizer": {
+    "train_bs": 64,
+    "val_bs": 64,
+    "type": "AdamW",
+    "learning_rate": 3e-4,
+    "weight_decay": 1e-2,
+    "schedule": {
+      "type": "cosine",
+      "mode": "step",
+      "epochs": 20,
+      "params": {
+        "eta_min": 1e-5
+      }
+    }
+  },
+  "losses": [
+    {
+      "name": "BCEW",
+      "type": "BCEBirdLossCalculator",
+      "weight": 1,
+      "display": true
+
+    }
+  ]
+}
